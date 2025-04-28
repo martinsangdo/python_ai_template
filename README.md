@@ -1,1 +1,1 @@
-# python_langchain_master
+# My Generative AI template
