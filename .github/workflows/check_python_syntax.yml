@@ -2,7 +2,7 @@ name: Python Syntax Check
 on:
   push:
     branches:
-      - main-check-python-syntax-action  # Change this to your specific branch name (e.g., 'develop')
+      - feature/main-check-python-syntax-action  # Change this to your specific branch name (e.g., 'develop')
 jobs:
   check-syntax:
     runs-on: ubuntu-latest
