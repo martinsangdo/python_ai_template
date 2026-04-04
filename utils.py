@@ -1,9 +1,10 @@
 import uuid
 
 def generate_uuid():
+    secret_str = "Z0FBQUFBQxxx" #should trigger an action
     return str(uuid.uuid4())
 
-abc
+
 
 if __name__ == "__main__":
     print(generate_uuid())
