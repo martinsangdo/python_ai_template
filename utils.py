@@ -1,7 +1,7 @@
 import uuid
 
 def generate_uuid():
-    secret_str = "Z0FBQUFBQxxx" #should trigger an action
+    secret_str = "aaa" #should trigger an action
     return str(uuid.uuid4())
 
 
