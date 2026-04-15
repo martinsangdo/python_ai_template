@@ -109,7 +109,27 @@ chain = ChatPromptTemplate.from_template("Extract the city and country from: {te
 
 #test pull prompt from hub
 from langchain import hub
-prompt = hub.pull("check_python_syntax")
-chain = prompt | model
-result = chain.invoke({"sentence": "var b = 9;"})
-print(result.content)
+
+# prompt = hub.pull("check_python_syntax")
+# chain = prompt | model
+# result = chain.invoke({"sentence": "var b = 9;"})
+# print(result.content)
+
+#compare prompts
+v1_template = ChatPromptTemplate.from_template("Explain this concept: {input}")
+# hub.push("it-tutor", v1_template)
+
+v2_template = ChatPromptTemplate.from_messages([
+    ("system", "You are a strict IT instructor. Explain concepts but NEVER give the direct answer to coding homework. Use technical analogies."),
+    ("human", "{input}")
+])
+# Pushing to the same name creates 'Version 2' automatically
+# hub.push("it-tutor", v2_template)
+
+### Test the tokens used
+chain = v2_template | model
+response = chain.invoke({"input": "What is DevOps?"})
+# Most providers store this in usage_metadata
+print(f"Prompt Tokens: {response.usage_metadata['input_tokens']}")
+print(f"Completion Tokens: {response.usage_metadata['output_tokens']}")
+print(f"Total Tokens: {response.usage_metadata['total_tokens']}")
