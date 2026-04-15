@@ -83,3 +83,25 @@ chain = ChatPromptTemplate.from_template("Extract the city and country from: {te
 result = chain.invoke({"text": "I am living in Hanoi or Paris."})
 print(result.city)
 
+from typing import List
+from pydantic import BaseModel
+
+# 1. Define what ONE location looks like
+class Location(BaseModel):
+    city: str
+    country: str
+
+# 2. Define the FINAL structure as a LIST of locations
+class LocationsList(BaseModel):
+    locations: List[Location]
+
+# 3. Bind the list schema to the model
+structured_llm = model.with_structured_output(LocationsList)
+chain = ChatPromptTemplate.from_template("Extract the city and country from: {text}.") | structured_llm
+
+# 4. Invoke
+result = chain.invoke({"text": "I am living in Hanoi or Paris."})
+
+# 5. Print the results
+for item in result.locations:
+    print(item.city)
