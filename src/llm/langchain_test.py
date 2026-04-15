@@ -6,7 +6,8 @@ load_dotenv(override=True)
 
 GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
 client = Groq(api_key=GROQ_API_KEY)
-MODEL_NAME = "llama-3.3-70b-versatile"
+MODEL_NAME = "llama-3.3-70b-versatile"  #fake the model name to see crash in Langsmith
+
 
 def simple_chat():
     continue_chating = True
@@ -79,9 +80,8 @@ chain = ChatPromptTemplate.from_template("Extract the city and country from: {te
 #Return ONLY a JSON list of objects with 'city' and 'country' keys.
 # chain = ChatPromptTemplate.from_template("Extract the city and country from: {text}.") | model | parser
 
-
-result = chain.invoke({"text": "I am living in Hanoi or Paris."})
-print(result.city)
+# result = chain.invoke({"text": "I am living in Hawaii."})
+# print(result.city)
 
 from typing import List
 from pydantic import BaseModel
@@ -100,8 +100,16 @@ structured_llm = model.with_structured_output(LocationsList)
 chain = ChatPromptTemplate.from_template("Extract the city and country from: {text}.") | structured_llm
 
 # 4. Invoke
-result = chain.invoke({"text": "I am living in Hanoi or Paris."})
+# result = chain.invoke({"text": "I am living in Hanoi or Paris."})
 
 # 5. Print the results
-for item in result.locations:
-    print(item.city)
+# for item in result.locations:
+#     print(item.city)
+
+
+#test pull prompt from hub
+from langchain import hub
+prompt = hub.pull("check_python_syntax")
+chain = prompt | model
+result = chain.invoke({"sentence": "var b = 9;"})
+print(result.content)
