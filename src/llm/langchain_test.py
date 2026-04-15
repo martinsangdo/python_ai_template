@@ -22,7 +22,7 @@ def simple_chat():
             )
             print(completion.choices[0].message.content)
 
-# simple_chat()   #without history
+simple_chat()   #without history
 
 def stream_with_history():
     history = [{"role": "system", "content": "You are a fast AI assistant."}]
@@ -127,9 +127,9 @@ v2_template = ChatPromptTemplate.from_messages([
 # hub.push("it-tutor", v2_template)
 
 ### Test the tokens used
-chain = v2_template | model
-response = chain.invoke({"input": "What is DevOps?"})
-# Most providers store this in usage_metadata
-print(f"Prompt Tokens: {response.usage_metadata['input_tokens']}")
-print(f"Completion Tokens: {response.usage_metadata['output_tokens']}")
-print(f"Total Tokens: {response.usage_metadata['total_tokens']}")
+# chain = v2_template | model
+# response = chain.invoke({"input": "What is DevOps?"})
+# # Most providers store this in usage_metadata
+# print(f"Prompt Tokens: {response.usage_metadata['input_tokens']}")
+# print(f"Completion Tokens: {response.usage_metadata['output_tokens']}")
+# print(f"Total Tokens: {response.usage_metadata['total_tokens']}")
